@@ -17,9 +17,11 @@ import java.util.LinkedList;
 public class SignView extends View {
     public String tag = SignView.class.getSimpleName();
     private LinkedList<LinkedList<HashMap<String, Float>>> lines;
+    private LinkedList<LinkedList<HashMap<String, Float>>> recycle;
     public SignView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         lines = new LinkedList<LinkedList<HashMap<String, Float>>>();
+        recycle = new LinkedList<LinkedList<HashMap<String, Float>>>();
     }
 
     @Override
@@ -50,11 +52,32 @@ public class SignView extends View {
             line = new LinkedList<HashMap<String, Float>>();
             line.add(point);
             lines.add(line);
+            if(recycle.size()>0){
+                recycle.clear();
+            }
         }else if(event.getAction() == MotionEvent.ACTION_MOVE){
             Log.d(tag, "Draw old line in x:" + x + "y:" + y);
             lines.getLast().add(point);
         }
         invalidate(); //update onDraw
         return true;
+    }
+    public void clear(){
+        lines.clear();
+        invalidate();
+    }
+
+    public void undo(){
+        if(lines.size()>0){
+            recycle.add(lines.removeLast());
+            invalidate();
+        }
+    }
+
+    public void redo(){
+        if(recycle.size()>0){
+            lines.add(recycle.removeLast());
+            invalidate();
+        }
     }
 }

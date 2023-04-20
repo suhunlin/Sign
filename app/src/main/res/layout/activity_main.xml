@@ -18,12 +18,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear"
+            android:onClick="clear"
+            />
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Undo"
+            android:onClick="undo"
+            />
+        <Button
+            android:id="@+id/redo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Redo"
+            android:onClick="redo"
             />
     </LinearLayout>
     <com.suhun.signproject.SignView
+        android:id="@+id/sView"
         android:layout_width="0dp"
         android:layout_weight="7"
         android:layout_height="match_parent"
         android:background="#ff0"
         />
+
 </LinearLayout>
